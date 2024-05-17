@@ -1,0 +1,26 @@
+{
+    "visual": {
+        "name": "image",
+        "displayName": "Image",
+        "guid": "image9381D9E0B8224040987A3963DA557E0D",
+        "visualClassName": "Visual",
+        "version": "1.0.0.0",
+        "description": "Visualization to show an Image from a String representing a URL or base64 encoded Image",
+        "supportUrl": "https://www.plainbi.com",
+        "gitHubUrl": "https://www.plainbi.com"
+    },
+    "apiVersion": "5.3.0",
+    "author": {
+        "name": "Markus Kolp",
+        "email": "markus.kolp@plainbi.com"
+    },
+    "assets": {
+        "icon": "assets/icon_image.png"
+    },
+    "externalJS": null,
+    "style": "style/visual.less",
+    "capabilities": "capabilities.json",
+    "dependencies": null,
+    "stringResources": [],
+    "version": "1.0.0.0"
+}
