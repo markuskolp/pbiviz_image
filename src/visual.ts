@@ -28,30 +28,35 @@ export class Visual implements IVisual {
         this.reactRoot = React.createElement(ReactCircleCard, {});
         this.target = options.element;
         this.formattingSettingsService = new FormattingSettingsService();
-        
+
         ReactDOM.render(this.reactRoot, this.target);
     }
-    
+
     public getFormattingModel(): powerbi.visuals.FormattingModel {
         return this.formattingSettingsService.buildFormattingModel(this.formattingSettings);
     }
-    
+
     public update(options: VisualUpdateOptions) {
-        if(options.dataViews && options.dataViews[0]){
+        if (options.dataViews && options.dataViews[0]) {
             const dataView: DataView = options.dataViews[0];
-            const dataView2: DataView = options.dataViews[0];
-        
+
             this.viewport = options.viewport;
             const { width, height } = this.viewport;
             const size = Math.min(width, height);
-            
+            console.log("size: " + size);
+
+            const imageURL = dataView.categorical.values[0].values[0].valueOf().toString();
+            console.log("imageURL: " + imageURL);
+            const altText = dataView.categorical.categories[0].values[0].valueOf().toString();
+            console.log("altText: " + altText);
+
             this.formattingSettings = this.formattingSettingsService.populateFormattingSettingsModel(VisualFormattingSettingsModel, options.dataViews[0]);
             const circleSettings = this.formattingSettings.circleCard;
 
             ReactCircleCard.update({
                 //imageURL: dataView.single.value.toString(), // dataView.metadata.columns[0].displayName // label of selected item
-                imageURL: dataView.categorical.values[0].values[0].valueOf().toString(), // dataView.metadata.columns[0].displayName // label of selected item
-                altText: dataView.categorical.categories[0].values[0].valueOf().toString(),
+                imageURL,
+                altText,
                 size
                 //borderWidth: circleSettings.circleThickness.value,
                 //background: circleSettings.circleColor.value.value

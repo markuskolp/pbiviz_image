@@ -14,7 +14,7 @@
     "objects": {
         "circle": {
             "properties": {
-               "circleColor": {
+                "circleColor": {
                     "type": {
                         "fill": {
                             "solid": {
@@ -44,15 +44,30 @@
                 }
             ],
             "categorical": {
- 
                 "categories": {
-                    "select": [{"bind": {"to": "alttext"}}]
+                    "select": [
+                        {
+                            "bind": {
+                                "to": "alttext"
+                            }
+                        }
+                    ]
                 },
                 "values": {
-                    "bind": {"to": "imageurl"}
+                    "bind": {
+                        "to": "imageurl"
+                    }
                 }
             }
         }
     ],
-    "privileges": []
+    "privileges": [
+        {
+            "name": "WebAccess",
+            "essential": true,
+            "parameters": [
+                "*"
+            ]
+        }
+    ]
 }
