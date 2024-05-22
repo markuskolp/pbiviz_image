@@ -1,9 +1,14 @@
 {
     "dataRoles": [
         {
-            "displayName": "Measure Data",
-            "name": "measure",
+            "displayName": "Bild URL",
+            "name": "imageurl",
             "kind": "Measure"
+        },
+        {
+            "displayName": "Alt. Text",
+            "name": "alttext",
+            "kind": "Grouping"
         }
     ],
     "objects": {
@@ -30,13 +35,22 @@
         {
             "conditions": [
                 {
-                    "measure": {
+                    "imageurl": {
+                        "max": 1
+                    },
+                    "alttext": {
                         "max": 1
                     }
                 }
             ],
-            "single": {
-                "role": "measure"
+            "categorical": {
+ 
+                "categories": {
+                    "select": [{"bind": {"to": "alttext"}}]
+                },
+                "values": {
+                    "bind": {"to": "imageurl"}
+                }
             }
         }
     ],

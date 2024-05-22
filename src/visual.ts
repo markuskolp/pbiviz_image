@@ -39,6 +39,7 @@ export class Visual implements IVisual {
     public update(options: VisualUpdateOptions) {
         if(options.dataViews && options.dataViews[0]){
             const dataView: DataView = options.dataViews[0];
+            const dataView2: DataView = options.dataViews[0];
         
             this.viewport = options.viewport;
             const { width, height } = this.viewport;
@@ -48,11 +49,12 @@ export class Visual implements IVisual {
             const circleSettings = this.formattingSettings.circleCard;
 
             ReactCircleCard.update({
-                textLabel: dataView.metadata.columns[0].displayName,
-                textValue: dataView.single.value.toString(),
-                size,
-                borderWidth: circleSettings.circleThickness.value,
-                background: circleSettings.circleColor.value.value
+                //imageURL: dataView.single.value.toString(), // dataView.metadata.columns[0].displayName // label of selected item
+                imageURL: dataView.categorical.values[0].values[0].valueOf().toString(), // dataView.metadata.columns[0].displayName // label of selected item
+                altText: dataView.categorical.categories[0].values[0].valueOf().toString(),
+                size
+                //borderWidth: circleSettings.circleThickness.value,
+                //background: circleSettings.circleColor.value.value
             });
         } else {
             this.clear();

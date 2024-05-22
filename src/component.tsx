@@ -1,17 +1,17 @@
 import * as React from "react";
 
 export interface State {
-    background?: string,
-    borderWidth?: number,
+    //background?: string,
+    //borderWidth?: number,
     size: number,
-    textLabel: string,
-    textValue: string
+    imageURL: string,
+    altText: string
 }
 
 export const initialState: State = {
     size: 200,
-    textLabel: "",
-    textValue: ""
+    imageURL: "",
+    altText: ""
 }
 
 export class ReactCircleCard extends React.Component<{}, State>{
@@ -39,17 +39,15 @@ export class ReactCircleCard extends React.Component<{}, State>{
     }
 
     render(){
-        const { textLabel, textValue, size, background, borderWidth } = this.state;
-        const style: React.CSSProperties = { width: size, height: size, background, borderWidth };
+        //const { imageURL, altText, size, background, borderWidth } = this.state;
+        const { imageURL, altText, size } = this.state;
+        //const style: React.CSSProperties = { width: size, height: size, background, borderWidth };
+        const style: React.CSSProperties = { width: size, height: size };
 
         return (
-            <div className="circleCard" style={style}>
-                <p>
-                    {textLabel}
-                    <br/>
-                    <em>{textValue}</em>
-                </p>
-            </div>
+            <img src="https://ucarecdn.com/c08d7cc7-3459-442a-a8f6-a1982da6e358" alt={altText} style={style}/> 
         )
     }
 }
+
+//className="circleCard" style={style}>
