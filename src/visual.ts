@@ -5,6 +5,7 @@ import DataView = powerbi.DataView;
 import VisualConstructorOptions = powerbi.extensibility.visual.VisualConstructorOptions;
 import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;
 import IVisual = powerbi.extensibility.visual.IVisual;
+import ILocalizationManager = powerbi.extensibility.ILocalizationManager;
 
 // Import React dependencies and the added component
 import * as React from "react";
@@ -23,11 +24,15 @@ export class Visual implements IVisual {
     private viewport: IViewport;
     private formattingSettings: VisualFormattingSettingsModel;
     private formattingSettingsService: FormattingSettingsService;
+    private localizationManager: ILocalizationManager;
 
     constructor(options: VisualConstructorOptions) {
         this.reactRoot = React.createElement(ReactCircleCard, {});
         this.target = options.element;
         this.formattingSettingsService = new FormattingSettingsService();
+
+        this.localizationManager = options.host.createLocalizationManager();
+        //this.formattingSettingsService = new FormattingSettingsService(this.localizationManager);
 
         ReactDOM.render(this.reactRoot, this.target);
     }
@@ -79,6 +84,8 @@ export class Visual implements IVisual {
             console.log("altText: " + altText);
 
             this.formattingSettings = this.formattingSettingsService.populateFormattingSettingsModel(VisualFormattingSettingsModel, options.dataViews[0]);
+            //this.formattingSettings.setLocalizedOptions(this.localizationManager);
+
             const circleSettings = this.formattingSettings.circleCard;
 
             ReactCircleCard.update({

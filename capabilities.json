@@ -2,11 +2,13 @@
     "dataRoles": [
         {
             "displayName": "Bild URL",
+            "displayNameKey": "imageUrlDisplayName",
             "name": "imageurl",
             "kind": "Grouping"
         },
         {
             "displayName": "Alt. Text",
+            "displayNameKey": "altTextDisplayName",
             "name": "alttext",
             "kind": "Grouping"
         }
