@@ -45,10 +45,11 @@ export class ReactCircleCard extends React.Component<{}, State>{
         const style: React.CSSProperties = { width: size, height: size };
 
         return (
-            <React.Fragment>
-                <img src={imageURL} alt={altText} style={style} />
+            imageURL ? (
+                <img src={imageURL} style={style} />
+            ) : (
                 <p>{altText}</p>
-            </React.Fragment>
+            )
         )
     }
 }

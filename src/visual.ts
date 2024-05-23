@@ -50,9 +50,30 @@ export class Visual implements IVisual {
             console.log("imageURL: " + imageURL);
             console.log("altText: " + altText);
 
+            // get positions of attributes in dataView columns
+            var indexImageURL = -1;
+            var indexAltText = -1;
+            for (var i = 0; i < dataView.categorical.categories.length; i++) {
+                console.log(dataView.categorical.categories[i].source.roles);
+                dataView.categorical.categories[i].source.roles["imageurl"] ? indexImageURL = i : "";
+                dataView.categorical.categories[i].source.roles["alttext"] ? indexAltText = i : "";
+            }
+            console.log("indexImageURL: " + indexImageURL);
+            console.log("indexAltText: " + indexAltText);
+
+            // get value for attributes if they are populated
+            if (indexImageURL >= 0 ) {
+                console.log("has indexImageURL");
+                imageURL = dataView.categorical.categories[indexImageURL].values[0].valueOf().toString();
+            }
+            if (indexAltText >= 0) {
+                console.log("has indexAltText");
+                altText = dataView.categorical.categories[indexAltText].values[0].valueOf().toString();
+            }
+            
             //const imageURL = dataView.categorical.values[0].values[0].valueOf().toString();
-            try { imageURL = dataView.categorical.categories[0].values[0].valueOf().toString(); } catch(ex) {}
-            try { altText = dataView.categorical.categories[1].values[0].valueOf().toString(); } catch(ex) {}
+            //try { imageURL = dataView.categorical.categories[0].values[0].valueOf().toString(); } catch(ex) {}
+            //try { altText = dataView.categorical.categories[1].values[0].valueOf().toString(); } catch(ex) {}
 
             console.log("imageURL: " + imageURL);
             console.log("altText: " + altText);
