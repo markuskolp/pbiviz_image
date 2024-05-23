@@ -3,7 +3,7 @@
         {
             "displayName": "Bild URL",
             "name": "imageurl",
-            "kind": "Measure"
+            "kind": "Grouping"
         },
         {
             "displayName": "Alt. Text",
@@ -48,15 +48,15 @@
                     "select": [
                         {
                             "bind": {
+                                "to": "imageurl"
+                            }
+                        },
+                        {
+                            "bind": {
                                 "to": "alttext"
                             }
                         }
                     ]
-                },
-                "values": {
-                    "bind": {
-                        "to": "imageurl"
-                    }
                 }
             }
         }

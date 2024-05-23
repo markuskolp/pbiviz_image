@@ -45,9 +45,16 @@ export class Visual implements IVisual {
             const size = Math.min(width, height);
             console.log("size: " + size);
 
-            const imageURL = dataView.categorical.values[0].values[0].valueOf().toString();
+            var imageURL = "";
+            var altText = "";
             console.log("imageURL: " + imageURL);
-            const altText = dataView.categorical.categories[0].values[0].valueOf().toString();
+            console.log("altText: " + altText);
+
+            //const imageURL = dataView.categorical.values[0].values[0].valueOf().toString();
+            try { imageURL = dataView.categorical.categories[0].values[0].valueOf().toString(); } catch(ex) {}
+            try { altText = dataView.categorical.categories[1].values[0].valueOf().toString(); } catch(ex) {}
+
+            console.log("imageURL: " + imageURL);
             console.log("altText: " + altText);
 
             this.formattingSettings = this.formattingSettingsService.populateFormattingSettingsModel(VisualFormattingSettingsModel, options.dataViews[0]);
