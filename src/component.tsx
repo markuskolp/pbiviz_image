@@ -42,11 +42,11 @@ export class ReactCircleCard extends React.Component<{}, State>{
         //const { imageURL, altText, size, background, borderWidth } = this.state;
         const { imageURL, altText, size } = this.state;
         //const style: React.CSSProperties = { width: size, height: size, background, borderWidth };
-        const style: React.CSSProperties = { width: size, height: size };
+        //const style: React.CSSProperties = { width: size, height: size };
 
         return (
             imageURL ? (
-                <img src={imageURL} style={style} />
+                <img src={imageURL}  />
             ) : (
                 <p>{altText}</p>
             )
