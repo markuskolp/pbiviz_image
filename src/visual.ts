@@ -41,44 +41,44 @@ export class Visual implements IVisual {
     }
 
     public update(options: VisualUpdateOptions) {
-        console.log("update");
+        //console.log("update");
         if (options.dataViews && options.dataViews[0]) {
-            console.log("go");
+            //console.log("has dataView");
             const dataView: DataView = options.dataViews[0];
 
             this.viewport = options.viewport;
             const { width, height } = this.viewport;
             const size = Math.min(width, height);
-            console.log("size: " + size);
+            //console.log("size: " + size);
 
             // for every update reset the values
             var imageURL = "";
             var altText = "";
-            console.log("imageURL: " + imageURL);
-            console.log("altText: " + altText);
+            //console.log("imageURL: " + imageURL);
+            //console.log("altText: " + altText);
 
             // get positions of attributes in dataView columns
             var indexImageURL = -1;
             var indexAltText = -1;
             for (var i = 0; i < dataView.categorical.categories.length; i++) {
-                console.log(dataView.categorical.categories[i].source.roles);
+                //console.log(dataView.categorical.categories[i].source.roles);
                 dataView.categorical.categories[i].source.roles["imageurl"] ? indexImageURL = i : "";
                 dataView.categorical.categories[i].source.roles["alttext"] ? indexAltText = i : "";
             }
-            console.log("indexImageURL: " + indexImageURL);
-            console.log("indexAltText: " + indexAltText);
+            //console.log("indexImageURL: " + indexImageURL);
+            //console.log("indexAltText: " + indexAltText);
 
             // get value for attributes if they are populated
             if (indexImageURL >= 0) {
-                console.log("has indexImageURL");
+                //console.log("has indexImageURL");
                 imageURL = dataView.categorical.categories[indexImageURL].values[0].valueOf().toString();
             }
             if (indexAltText >= 0) {
-                console.log("has indexAltText");
+                //console.log("has indexAltText");
                 altText = dataView.categorical.categories[indexAltText].values[0].valueOf().toString();
             }
-            console.log("imageURL: " + imageURL);
-            console.log("altText: " + altText);
+            //console.log("imageURL: " + imageURL);
+            //console.log("altText: " + altText);
 
             this.formattingSettings = this.formattingSettingsService.populateFormattingSettingsModel(VisualFormattingSettingsModel, options.dataViews[0]);
             //this.formattingSettings.setLocalizedOptions(this.localizationManager);
@@ -92,7 +92,7 @@ export class Visual implements IVisual {
                 imageVisible
             });
         } else {
-            console.log("clear");
+            //console.log("clear");
             this.clear();
         }
     }

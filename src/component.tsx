@@ -39,13 +39,13 @@ export class ReactImage extends React.Component<{}, State>{
     }
 
     private onImageLoad(e) {
-        console.log("onImageLoad");
+        //console.log("onImageLoad");
         e.target.style.display = "block";
         document.getElementById("pbiviz_image_alttext").style.display = "none";
     }
 
     private onImageError(e) {
-        console.log("onImageError");
+        //console.log("onImageError");
         e.target.style.display = "none";
         document.getElementById("pbiviz_image_alttext").style.display = "block";
     }
