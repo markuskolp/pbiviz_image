@@ -1,8 +1,6 @@
 import * as React from "react";
 
 export interface State {
-    //background?: string,
-    //borderWidth?: number,
     size: number,
     imageURL: string,
     altText: string
@@ -14,7 +12,7 @@ export const initialState: State = {
     altText: ""
 }
 
-export class ReactCircleCard extends React.Component<{}, State>{
+export class ReactImage extends React.Component<{}, State>{
     constructor(props: any) {
         super(props);
         this.state = initialState;
@@ -23,30 +21,27 @@ export class ReactCircleCard extends React.Component<{}, State>{
     private static updateCallback: (data: object) => void = null;
 
     public static update(newState: State) {
-        if (typeof ReactCircleCard.updateCallback === 'function') {
-            ReactCircleCard.updateCallback(newState);
+        if (typeof ReactImage.updateCallback === 'function') {
+            ReactImage.updateCallback(newState);
         }
     }
 
     public state: State = initialState;
 
     public componentWillMount() {
-        ReactCircleCard.updateCallback = (newState: State): void => { this.setState(newState); };
+        ReactImage.updateCallback = (newState: State): void => { this.setState(newState); };
     }
 
     public componentWillUnmount() {
-        ReactCircleCard.updateCallback = null;
+        ReactImage.updateCallback = null;
     }
 
     render() {
-        //const { imageURL, altText, size, background, borderWidth } = this.state;
         const { imageURL, altText, size } = this.state;
-        //const style: React.CSSProperties = { width: size, height: size, background, borderWidth };
-        //const style: React.CSSProperties = { width: size, height: size };
 
         return (
             imageURL ? (
-                <img src={imageURL}  />
+                <img src={imageURL} />
             ) : (
                 <p>{altText}</p>
             )
@@ -54,4 +49,3 @@ export class ReactCircleCard extends React.Component<{}, State>{
     }
 }
 
-//className="circleCard" style={style}>

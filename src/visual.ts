@@ -7,10 +7,9 @@ import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;
 import IVisual = powerbi.extensibility.visual.IVisual;
 import ILocalizationManager = powerbi.extensibility.ILocalizationManager;
 
-// Import React dependencies and the added component
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { ReactCircleCard, initialState } from "./component";
+import { ReactImage, initialState } from "./component";
 import IViewport = powerbi.IViewport;
 import { FormattingSettingsService } from "powerbi-visuals-utils-formattingmodel";
 import { VisualFormattingSettingsModel } from "./settings";
@@ -27,7 +26,7 @@ export class Visual implements IVisual {
     private localizationManager: ILocalizationManager;
 
     constructor(options: VisualConstructorOptions) {
-        this.reactRoot = React.createElement(ReactCircleCard, {});
+        this.reactRoot = React.createElement(ReactImage, {});
         this.target = options.element;
         this.formattingSettingsService = new FormattingSettingsService();
 
@@ -42,7 +41,9 @@ export class Visual implements IVisual {
     }
 
     public update(options: VisualUpdateOptions) {
+        console.log("update");
         if (options.dataViews && options.dataViews[0]) {
+            console.log("go");
             const dataView: DataView = options.dataViews[0];
 
             this.viewport = options.viewport;
@@ -50,6 +51,7 @@ export class Visual implements IVisual {
             const size = Math.min(width, height);
             console.log("size: " + size);
 
+            // for every update reset the values
             var imageURL = "";
             var altText = "";
             console.log("imageURL: " + imageURL);
@@ -67,7 +69,7 @@ export class Visual implements IVisual {
             console.log("indexAltText: " + indexAltText);
 
             // get value for attributes if they are populated
-            if (indexImageURL >= 0 ) {
+            if (indexImageURL >= 0) {
                 console.log("has indexImageURL");
                 imageURL = dataView.categorical.categories[indexImageURL].values[0].valueOf().toString();
             }
@@ -75,32 +77,23 @@ export class Visual implements IVisual {
                 console.log("has indexAltText");
                 altText = dataView.categorical.categories[indexAltText].values[0].valueOf().toString();
             }
-            
-            //const imageURL = dataView.categorical.values[0].values[0].valueOf().toString();
-            //try { imageURL = dataView.categorical.categories[0].values[0].valueOf().toString(); } catch(ex) {}
-            //try { altText = dataView.categorical.categories[1].values[0].valueOf().toString(); } catch(ex) {}
-
             console.log("imageURL: " + imageURL);
             console.log("altText: " + altText);
 
             this.formattingSettings = this.formattingSettingsService.populateFormattingSettingsModel(VisualFormattingSettingsModel, options.dataViews[0]);
             //this.formattingSettings.setLocalizedOptions(this.localizationManager);
 
-            const circleSettings = this.formattingSettings.circleCard;
-
-            ReactCircleCard.update({
-                //imageURL: dataView.single.value.toString(), // dataView.metadata.columns[0].displayName // label of selected item
+            ReactImage.update({
                 imageURL,
                 altText,
                 size
-                //borderWidth: circleSettings.circleThickness.value,
-                //background: circleSettings.circleColor.value.value
             });
         } else {
+            console.log("clear");
             this.clear();
         }
     }
     private clear() {
-        ReactCircleCard.update(initialState);
+        ReactImage.update(initialState);
     }
 }
