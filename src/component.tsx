@@ -3,13 +3,15 @@ import * as React from "react";
 export interface State {
     size: number,
     imageURL: string,
-    altText: string
+    altText: string,
+    imageVisible: boolean
 }
 
 export const initialState: State = {
     size: 200,
     imageURL: "",
-    altText: ""
+    altText: "",
+    imageVisible: true
 }
 
 export class ReactImage extends React.Component<{}, State>{
@@ -36,15 +38,26 @@ export class ReactImage extends React.Component<{}, State>{
         ReactImage.updateCallback = null;
     }
 
+    private onImageLoad(e) {
+        console.log("onImageLoad");
+        e.target.style.display = "block";
+        document.getElementById("pbiviz_image_alttext").style.display = "none";
+    }
+
+    private onImageError(e) {
+        console.log("onImageError");
+        e.target.style.display = "none";
+        document.getElementById("pbiviz_image_alttext").style.display = "block";
+    }
+
     render() {
-        const { imageURL, altText, size } = this.state;
+        const { imageURL, altText, size, imageVisible } = this.state;
 
         return (
-            imageURL ? (
-                <img src={imageURL} />
-            ) : (
-                <p>{altText}</p>
-            )
+            <React.Fragment>
+                <img src={imageURL} alt={altText} onError={this.onImageError} onLoad={this.onImageLoad} />
+                <p id="pbiviz_image_alttext">{altText}</p>
+            </React.Fragment>
         )
     }
 }

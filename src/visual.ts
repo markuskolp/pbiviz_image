@@ -83,10 +83,13 @@ export class Visual implements IVisual {
             this.formattingSettings = this.formattingSettingsService.populateFormattingSettingsModel(VisualFormattingSettingsModel, options.dataViews[0]);
             //this.formattingSettings.setLocalizedOptions(this.localizationManager);
 
+            const imageVisible = true;
+
             ReactImage.update({
                 imageURL,
                 altText,
-                size
+                size,
+                imageVisible
             });
         } else {
             console.log("clear");
