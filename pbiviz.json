@@ -6,8 +6,8 @@
         "visualClassName": "Visual",
         "version": "1.0.0.0",
         "description": "Visualization to show an Image from a String representing a URL or base64 encoded Image",
-        "supportUrl": "https://www.plainbi.com",
-        "gitHubUrl": "https://www.plainbi.com"
+        "supportUrl": "https://github.com/markuskolp/pbiviz_image",
+        "gitHubUrl": "https://github.com/markuskolp/pbiviz_image"
     },
     "apiVersion": "5.3.0",
     "author": {

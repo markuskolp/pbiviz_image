@@ -54,5 +54,7 @@
             ]
         }
     ],
-    "suppressDefaultTitle": true
+    "suppressDefaultTitle": true,
+    "supportsLandingPage": true,
+    "supportsEmptyDataView": true
 }

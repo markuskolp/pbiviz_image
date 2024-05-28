@@ -1,5 +1,7 @@
 "use strict";
 import powerbi from "powerbi-visuals-api";
+import { select, Selection } from "d3-selection";
+
 
 import DataView = powerbi.DataView;
 import VisualConstructorOptions = powerbi.extensibility.visual.VisualConstructorOptions;
@@ -25,6 +27,9 @@ export class Visual implements IVisual {
     private formattingSettingsService: FormattingSettingsService;
     private localizationManager: ILocalizationManager;
 
+    private isLandingPageOn: boolean;
+    private landingPage: Selection<any, any, any, any>;
+
     constructor(options: VisualConstructorOptions) {
         this.reactRoot = React.createElement(ReactImage, {});
         this.target = options.element;
@@ -40,7 +45,45 @@ export class Visual implements IVisual {
         return this.formattingSettingsService.buildFormattingModel(this.formattingSettings);
     }
 
+    private handleLandingPage(options: VisualUpdateOptions) {
+        console.log("handleLandingPage");
+        //if(!options.dataViews || !options.dataViews.length) { // !options.dataViews[0]?.metadata?.columns?.length){
+        if(!options.dataViews || !options.dataViews[0]?.metadata?.columns?.length){
+            console.log("truning landing page ... if ...");
+            if(!this.isLandingPageOn) {
+                console.log("truning landing page ON");
+                this.isLandingPageOn = true;
+                const landingPage: Element = this.createLandingPage();
+                this.target.appendChild(landingPage);
+                this.landingPage = select(landingPage);
+            }
+
+        } else {
+            console.log("truning landing page ... else ...");
+            if(this.isLandingPageOn){
+                    console.log("truning landing page OFF");
+                    this.isLandingPageOn = false;
+                    this.landingPage.remove();
+                }
+        }
+    }
+
+    private createLandingPage(): Element {
+        console.log("createLandingPage");
+        const div = document.createElement("div");
+        const contentHTML = "<h3>Image visual</h3>"+
+        "<h5>Please select fields to fill this visual.</h5>";
+        div.innerHTML = contentHTML;
+        //div.classList.add("watermark");
+        return div;
+    }
+
     public update(options: VisualUpdateOptions) {
+
+        console.log("update");
+
+        this.handleLandingPage(options);
+
         //console.log("update");
         if (options.dataViews && options.dataViews[0]) {
             //console.log("has dataView");
