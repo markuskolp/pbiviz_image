@@ -1,20 +1,16 @@
 import * as React from "react";
 
 export interface State {
-    size: number,
     imageURL: string,
-    altText: string,
-    imageVisible: boolean
+    altText: string
 }
 
 export const initialState: State = {
-    size: 200,
     imageURL: "",
-    altText: "",
-    imageVisible: true
+    altText: ""
 }
 
-export class ReactImage extends React.Component<{}, State>{
+export class ReactImage extends React.Component<State>{
     constructor(props: any) {
         super(props);
         this.state = initialState;
@@ -51,7 +47,7 @@ export class ReactImage extends React.Component<{}, State>{
     }
 
     render() {
-        const { imageURL, altText, size, imageVisible } = this.state;
+        const { imageURL, altText } = this.state;
 
         return (
             <React.Fragment>

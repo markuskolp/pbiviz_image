@@ -94,25 +94,23 @@ export class Visual implements IVisual {
             //console.log("has dataView");
             const dataView: DataView = options.dataViews[0];
 
-            this.viewport = options.viewport;
-            const { width, height } = this.viewport;
-            const size = Math.min(width, height);
+            //this.viewport = options.viewport;
+            //const { width, height } = this.viewport;
+            //const size = Math.min(width, height);
             //console.log("size: " + size);
 
             // for every update reset the values
-            var imageURL = "";
-            var altText = "";
+            let imageURL = "";
+            let altText = "";
             //console.log("imageURL: " + imageURL);
             //console.log("altText: " + altText);
 
-            var indexImageURL = -1;
-            var indexAltText = -1;
-
-            const imageVisible = true;
+            let indexImageURL = -1;
+            let indexAltText = -1;
 
             if (dataView.categorical?.categories) {
                 // get positions of attributes in dataView columns
-                for (var i = 0; i < dataView.categorical.categories.length; i++) {
+                for (let i = 0; i < dataView.categorical.categories.length; i++) {
                     //console.log(dataView.categorical.categories[i].source.roles);
                     dataView.categorical.categories[i].source.roles["imageurl"] ? indexImageURL = i : "";
                     dataView.categorical.categories[i].source.roles["alttext"] ? indexAltText = i : "";
@@ -140,17 +138,13 @@ export class Visual implements IVisual {
                 //console.log("update image with imageURL and altText");
                 ReactImage.update({
                     imageURL,
-                    altText,
-                    size,
-                    imageVisible
+                    altText
                 });
             } else  {
                 //console.log("reset image because imageURL and altText are empty");
                 ReactImage.update({
-                    size: 200,
                     imageURL: "",
-                    altText: "",
-                    imageVisible: true
+                    altText: ""
                 });
             }
 
