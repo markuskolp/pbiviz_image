@@ -15,6 +15,7 @@ import { ReactImage, initialState } from "./component";
 import IViewport = powerbi.IViewport;
 import { FormattingSettingsService } from "powerbi-visuals-utils-formattingmodel";
 import { VisualFormattingSettingsModel } from "./settings";
+import IVisualEventService = powerbi.extensibility.IVisualEventService;
 
 import "./../style/visual.less";
 
@@ -30,7 +31,12 @@ export class Visual implements IVisual {
     private isLandingPageOn: boolean;
     private landingPage: Selection<any, any, any, any>;
 
+    private events: IVisualEventService;
+
     constructor(options: VisualConstructorOptions) {
+
+        this.events = options.host.eventService;
+
         this.reactRoot = React.createElement(ReactImage, {});
         this.target = options.element;
         this.formattingSettingsService = new FormattingSettingsService();
@@ -80,11 +86,10 @@ export class Visual implements IVisual {
 
     public update(options: VisualUpdateOptions) {
 
-        console.log("update");
-
+        //console.log("update");
+        this.events.renderingStarted(options);
         this.handleLandingPage(options);
 
-        //console.log("update");
         if (options.dataViews && options.dataViews[0]) {
             //console.log("has dataView");
             const dataView: DataView = options.dataViews[0];
@@ -100,45 +105,63 @@ export class Visual implements IVisual {
             //console.log("imageURL: " + imageURL);
             //console.log("altText: " + altText);
 
-            // get positions of attributes in dataView columns
             var indexImageURL = -1;
             var indexAltText = -1;
-            for (var i = 0; i < dataView.categorical.categories.length; i++) {
-                //console.log(dataView.categorical.categories[i].source.roles);
-                dataView.categorical.categories[i].source.roles["imageurl"] ? indexImageURL = i : "";
-                dataView.categorical.categories[i].source.roles["alttext"] ? indexAltText = i : "";
-            }
-            //console.log("indexImageURL: " + indexImageURL);
-            //console.log("indexAltText: " + indexAltText);
-
-            // get value for attributes if they are populated
-            if (indexImageURL >= 0) {
-                //console.log("has indexImageURL");
-                imageURL = dataView.categorical.categories[indexImageURL].values[0].valueOf().toString();
-            }
-            if (indexAltText >= 0) {
-                //console.log("has indexAltText");
-                altText = dataView.categorical.categories[indexAltText].values[0].valueOf().toString();
-            }
-            //console.log("imageURL: " + imageURL);
-            //console.log("altText: " + altText);
-
-            this.formattingSettings = this.formattingSettingsService.populateFormattingSettingsModel(VisualFormattingSettingsModel, options.dataViews[0]);
-            //this.formattingSettings.setLocalizedOptions(this.localizationManager);
 
             const imageVisible = true;
 
-            ReactImage.update({
-                imageURL,
-                altText,
-                size,
-                imageVisible
-            });
+            if (dataView.categorical?.categories) {
+                // get positions of attributes in dataView columns
+                for (var i = 0; i < dataView.categorical.categories.length; i++) {
+                    //console.log(dataView.categorical.categories[i].source.roles);
+                    dataView.categorical.categories[i].source.roles["imageurl"] ? indexImageURL = i : "";
+                    dataView.categorical.categories[i].source.roles["alttext"] ? indexAltText = i : "";
+                }
+                //console.log("indexImageURL: " + indexImageURL);
+                //console.log("indexAltText: " + indexAltText);
+
+                // get value for attributes if they are populated
+                if (indexImageURL >= 0) {
+                    //console.log("has indexImageURL");
+                    imageURL = dataView.categorical.categories[indexImageURL].values[0].valueOf().toString();
+                }
+                if (indexAltText >= 0) {
+                    //console.log("has indexAltText");
+                    altText = dataView.categorical.categories[indexAltText].values[0].valueOf().toString();
+                }
+                //console.log("imageURL: " + imageURL);
+                //console.log("altText: " + altText);
+                
+                this.formattingSettings = this.formattingSettingsService.populateFormattingSettingsModel(VisualFormattingSettingsModel, options.dataViews[0]);
+                //this.formattingSettings.setLocalizedOptions(this.localizationManager);
+            }
+
+            if( indexImageURL >= 0 || indexAltText >= 0) {
+                //console.log("update image with imageURL and altText");
+                ReactImage.update({
+                    imageURL,
+                    altText,
+                    size,
+                    imageVisible
+                });
+            } else  {
+                //console.log("reset image because imageURL and altText are empty");
+                ReactImage.update({
+                    size: 200,
+                    imageURL: "",
+                    altText: "",
+                    imageVisible: true
+                });
+            }
+
         } else {
-            //console.log("clear");
+            console.log("clear");
             this.clear();
         }
+        
+        this.events.renderingFinished(options);
     }
+
     private clear() {
         ReactImage.update(initialState);
     }

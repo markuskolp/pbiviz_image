@@ -8,7 +8,7 @@
 				"file": "resources/image9381D9E0B8224040987A3963DA557E0D.pbiviz.json"
 			}
 		],
-		"visual": {"name":"image","displayName":"Image","guid":"image9381D9E0B8224040987A3963DA557E0D","visualClassName":"Visual","version":"1.0.0.0","description":"Visualization to show an Image from a String representing a URL or base64 encoded Image","supportUrl":"https://www.plainbi.com","gitHubUrl":"https://www.plainbi.com"},
+		"visual": {"name":"image","displayName":"Image","guid":"image9381D9E0B8224040987A3963DA557E0D","visualClassName":"Visual","version":"1.0.0.0","description":"Visualization to show an Image from a String representing a URL or base64 encoded Image","supportUrl":"https://github.com/markuskolp/pbiviz_image","gitHubUrl":"https://github.com/markuskolp/pbiviz_image"},
 		"metadata": {
 			"pbivizjson": {
 				"resourceId": "rId0"
