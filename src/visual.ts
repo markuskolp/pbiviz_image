@@ -8,6 +8,7 @@ import VisualConstructorOptions = powerbi.extensibility.visual.VisualConstructor
 import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;
 import IVisual = powerbi.extensibility.visual.IVisual;
 import ILocalizationManager = powerbi.extensibility.ILocalizationManager;
+import ISelectionManager = powerbi.extensibility.ISelectionManager;
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
@@ -27,15 +28,18 @@ export class Visual implements IVisual {
     private formattingSettings: VisualFormattingSettingsModel;
     private formattingSettingsService: FormattingSettingsService;
     private localizationManager: ILocalizationManager;
+    private selectionManager: ISelectionManager;
 
     private isLandingPageOn: boolean;
     private landingPage: Selection<any, any, any, any>;
+    //private root: Selection<any>;
 
     private events: IVisualEventService;
 
     constructor(options: VisualConstructorOptions) {
 
         this.events = options.host.eventService;
+        this.selectionManager = options.host.createSelectionManager();
 
         this.reactRoot = React.createElement(ReactImage, {});
         this.target = options.element;
@@ -44,12 +48,39 @@ export class Visual implements IVisual {
         this.localizationManager = options.host.createLocalizationManager();
         //this.formattingSettingsService = new FormattingSettingsService(this.localizationManager);
 
+        this.handleContextMenu();
+
         ReactDOM.render(this.reactRoot, this.target);
     }
 
     public getFormattingModel(): powerbi.visuals.FormattingModel {
         return this.formattingSettingsService.buildFormattingModel(this.formattingSettings);
     }
+
+    private handleContextMenu() {
+        /*this.target.on('contextmenu', (event: PointerEvent, dataPoint) => {
+            const mouseEvent: MouseEvent = event;
+            this.selectionManager.showContextMenu(dataPoint ? dataPoint: {}, {
+                x: mouseEvent.clientX,
+                y: mouseEvent.clientY
+            });
+            mouseEvent.preventDefault();
+        });
+        */
+        this.target.addEventListener('contextmenu', (event) => {
+            const mouseEvent: MouseEvent = event;
+            this.selectionManager.showContextMenu(
+                {},
+                { x: event.x, y: event.y }
+            );
+            //,"values" // Not sure what this should be, does not seem to make a difference
+            // Prevent the browser context-menu from showing
+            mouseEvent.preventDefault();
+            //return false;
+        })
+    }
+
+    
 
     private handleLandingPage(options: VisualUpdateOptions) {
         console.log("handleLandingPage");
