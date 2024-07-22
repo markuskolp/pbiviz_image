@@ -1,0 +1,2 @@
+-	innerHTML ersetzen durch echte Komponente mit SVG Rückgabe
+-	SVG Breite/Höhe richtig anpassen
